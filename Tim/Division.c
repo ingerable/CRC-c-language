@@ -52,8 +52,6 @@ int get_nb_bits(int nombre)
     return bits;
 }
 
-
-
 int main(){
   division(0b00000000000000000000000000000111, 0b00000000000000000000000000000111);
 
