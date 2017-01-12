@@ -11,25 +11,27 @@ void afficher_binaire(unsigned int n) {
 }
 
 uint32_t* Encodage(uint8_t* blocs, int nbBlocs){
-  uint32_t res[nbBlocs/4];
+  uint32_t* msgEncode = malloc(sizeof(uint32_t) * nbBlocs/3);
+
   int i;
   int j;
-  unsigned int wd;
+  uint32_t wd;
 
   for(i = 0; i < nbBlocs; i++){
-    uint8_t temp[4];
-    for(j = 0; j < 3; j++){
-      temp[j] = blocs[i+j];
-    }
-    wd = ((blocs[0] << 8) | blocs[1]) << 8 | blocs[2];
-    temp[4] = division(wd, G);
-    wd = (wd << 8) | temp[4];
+    if(i % 3 == 0){
+      uint8_t temp[4];
 
+      for(j = 0; j < 3; j++){
+        temp[j] = blocs[i+j];
+      }
+      wd = ((temp[0] << 8) | temp[1]) << 8 | temp[2];
+
+      temp[3] = division(wd, G);
+      wd = (wd << 8) | temp[3];
+
+      msgEncode[i] = wd;
+    }
   }
 
-  afficher_binaire(wd);
-
-
-  printf("\n");
-  return 0;
+  return msgEncode;
 }
