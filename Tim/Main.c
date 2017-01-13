@@ -1,5 +1,6 @@
 #include "Tim.h"
 
+
 void AffichageEncode(uint32_t* value, int size){
   uint8_t byteval[4];
   int i;
@@ -118,6 +119,8 @@ int main(){
   uint32_t* msgDecode = Decodage(tableau, size);
 */
 
+
+int main(){
 
   /***********/
   /*Affichage*/
