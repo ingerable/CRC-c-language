@@ -73,6 +73,8 @@ int main(){
   'o', 'f', ' ', '³', 'm', 'y', ' ', 'È', 'o', 'w', 'n', '?', ',', ' ', 'e', '?','v', 'e', 'r', '2'};
   uint32_t* msgDecode = Decodage(tableauDecode, size);
   AffichageDecode(msgDecode, size/4);
+  printf("\n" );
+  afficher_binaire(10);
 
 
 /*
