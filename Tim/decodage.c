@@ -5,7 +5,7 @@ uint32_t* Decodage(uint8_t* msgEncode, int tailleMsg)
   int i;
   int j;
   unsigned int wd;
-  uint32_t* msgDecode = calloc(tailleMsg, sizeof(uint32_t));
+  uint32_t* msgDecode = malloc(sizeof(uint32_t) * tailleMsg);
 
   for(i = 0; i < tailleMsg; i++)
   {
@@ -19,12 +19,10 @@ uint32_t* Decodage(uint8_t* msgEncode, int tailleMsg)
 
       if(division(wd, G) == 0)
       {
-        msgDecode[i]  = ((temp[0] << 8) | temp[1]) << 8 | temp[2];
-
+        msgDecode[i/4]  = ((temp[2] << 8) | temp[1]) << 8 | temp[0];
       }else{
-        //erreur detecté
-        uint8_t d = (uint8_t)'#';
-        msgDecode[i]  = ((d << 8) | d) << 8 | d;
+        uint8_t d = '#';
+        msgDecode[i/4]  = ((d << 8) | d) << 8 | d;
       }
     }
   }

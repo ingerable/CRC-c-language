@@ -2,7 +2,7 @@
 
 int numberOfLine(char* fileName)
 {
-  int numberOfLine = 0;
+  int numbe
   FILE * file;
   char c;
   file = fopen( fileName , "r");
