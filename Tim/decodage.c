@@ -1,10 +1,16 @@
 #include "Tim.h"
 
+/**
+ * [Decode un texte encode]
+ * @param  msgEncode [Tableau contenant les caracteres du texte a decoder]
+ * @param  tailleMsg [Nombre de caracteres]
+ * @return           [Tableau contenant les mots de code decodes]
+ */
 uint32_t* Decodage(uint8_t* msgEncode, int tailleMsg)
 {
   int i;
   int j;
-  unsigned int wd;
+  uint32_t abcd;
   uint32_t* msgDecode = malloc(sizeof(uint32_t) * tailleMsg);
 
   for(i = 0; i < tailleMsg; i++)
@@ -15,9 +21,10 @@ uint32_t* Decodage(uint8_t* msgEncode, int tailleMsg)
       for(j = 0; j < 4; j++){
         temp[j] = msgEncode[i+j];
       }
-      wd = (((temp[0] << 8) | temp[1]) << 8 | temp[2]) << 8 | temp[3];
 
-      if(division(wd, G) == 0)
+      abcd = (((temp[0] << 8) | temp[1]) << 8 | temp[2]) << 8 | temp[3];
+
+      if(division(abcd, G) == 0)
       {
         msgDecode[i/4]  = ((temp[2] << 8) | temp[1]) << 8 | temp[0];
       }else{

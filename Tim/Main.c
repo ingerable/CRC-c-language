@@ -1,134 +1,84 @@
 #include "Tim.h"
 
-
-void AffichageEncode(uint32_t* value, int size){
-  uint8_t byteval[4];
-  int i;
-  int j;
-  for(j = 0; j < size; j++)
-  {
-    if(j % 3 == 0){
-      for(i = 3; i >= 0; i--){
-        byteval[i] = value[j] >> (i*8);
-        printf("%c", byteval[i]);
-      }
-    }
-  }
-}
-
-void AffichageDecode(uint32_t* value, int size){
-  uint8_t byteval[3];
-  int i;
-  int j;
-  for(j = 0; j < size; j++)
-  {
-    for(i = 0; i < 3; i++){
-      byteval[i] = value[j] >> (i*8);
-      printf("%c", byteval[i]);
-    }
-  }
-}
-
 int main(){
 
-  /****************/
-  /*Tests Division*/
-  /****************/
-
-  //division(0b0000000100000001100000100, G);
-  //division(0b111111110001000000000100,G);
-  //division(0x20304, 0x131);
-
-  /****************/
-  /*Tests Encodage*/
-  /****************/
-
-/*
-  uint8_t tableau[3] = {0b11111111, 0b00010000, 0b00000100};
-  Encodage(tableau, 3);
-*/
-
-  printf("Test de codage :\n");
-  uint8_t tableauEncode[18] = {'"', 'I', 'f', ' ', 'I', ' ', 'h', 'a', 'd', ' ', 'a', ' ', 'w', 'o', 'r', 'l', 'd', ' '};
-  uint32_t* msgEncode = Encodage(tableauEncode, 18);
-  AffichageEncode(msgEncode, 18);
-  printf("\n\n");
+  /*Afficha d'un polynome*/
+  //affichagePolynome(0b101010);
 
 
-  /****************/
-  /*Tests Decodage*/
-  /****************/
+  /*******************************************/
+  /*Tests Decodage + écriture dans un fichier*/
+  /*******************************************/
 
-/*
-  "If¢ I µhad a ^woršld  of ³my Èown, ever2ything‹ woyuldÞ be» noÔnse$nse$.
-  ‰Notõhinëg wÛoul°d b§e wWhatD itÓ isD, because everyvthiWng wou
-  ld  be £wha$t iét iésn'Ìt. 1
-  And c–ont>rar˜y wˆiseÇ, w±hatD isD, iít wµoul°dn'‹t be. ÓAndó whîat óit ¡wou
-  ldn‚'t ¤be,Þ itÓ woyuldÞ.
-  ‰Youƒ se!e?"*/
+  /*Decodage fichier test sans erreur + écriture dans un fichier*/
 
-  printf("Test de texte sans erreur :\n");
-  int size = 44;
-  uint8_t tableauDecode[44] = {'"', 'I', 'f', '¢', ' ', 'I', ' ', 'µ',
-  'h', 'a', 'd', '?', ' ', 'a', ' ', '^', 'w', 'o', 'r', 'š', 'l', 'd', ' ', ' ',
-  'o', 'f', ' ', '³', 'm', 'y', ' ', 'È', 'o', 'w', 'n', '?', ',', ' ', 'e', '?','v', 'e', 'r', '2'};
-  uint32_t* msgDecode = Decodage(tableauDecode, size);
-  AffichageDecode(msgDecode, size/4);
-  printf("\n" );
-  afficher_binaire(10);
+  printf("\n");
+  struct fileContent fichierSansErreur = readFile("alice_0x131");
+  uint32_t* msgDecodeSansErreur = Decodage(fichierSansErreur.content, fichierSansErreur.size);
+  uint8_t* msgDecodeSansErreurChar = AffichageDecode(msgDecodeSansErreur, fichierSansErreur.size);
+  writeFile("TestDecodagePropre", msgDecodeSansErreurChar, fichierSansErreur.size);
+  printf("\n");
 
 
-/*
-  "Yf" I µhad a ^wobšld  of ³my Èiwn, ever2ything‹ woyuddž "e»0noÔnse$nse$.
-  ‰Nktõhinëg wÛoul°d b§e wW(atD itÓ isD, becaese åveryvthiWng wo5
-  ll  be £wha$t iét iésn'Ìt& 1
-  And c–ont:rar˜y wˆiseÇ,$w±hatD icD, iít ÷µoul°dn'‹t be. ÓAndó whîat óit ¡sou
-  ldN‚'t ¤be,Þ ivÓ woyuldÞ.
-  ‰Youƒ se!e?"+
-  -]- LØeWiBs CW!rrµoll, AÒlicŽe's= Ad{venturÐes tin !onÝdmrlanõd &V Thrwbgh Œthe* LoÑokiFng-MOlazss u
-*/
-/*
-  // ((uint8_t)(wchar_t)L'š')
-  printf("Test de texte avec erreurs :\n");
-  int size = 44;
-  uint8_t tableau[44] = {'"', 'Y', 'f', '"', ' ', 'I', ' ', ((wchar_t)L'µ'),
-  'h', 'a', 'd', '?', ' ', 'a', ' ', ((wchar_t)L'^'), 'w', 'o', 'b', 'š', 'l', 'd',' ', ' ', 'o', 'f',
-   ' ', '³', 'm', 'y', ' ', 'È', 'i', 'w', 'n', '?', ',', ' ', 'e', '?','v', 'e', 'r', '2'};
-  uint32_t* msgDecode = Decodage(tableau, size);
-*/
+  /*Decodage fichier test avec erreurs + écriture dans un fichier*/
 
-  /* Erreur -> ### */
-/*
-  int size = 4;
-  uint8_t tableau[4] = {'"', 'Y', 'f', '"'};
-  uint32_t* msgDecode = Decodage(tableau, 4);
-*/
-
-  /* Pas d'erreur */
-/*
-  int size = 4;
-  uint8_t tableau[4] = {'"', 'I', 'f', ((wchar_t)L'¢')};
-  uint32_t* msgDecode = Decodage(tableau, size);
-*/
-
-  /* Erreur :'( */
-  //afficher_binaire(((wchar_t)L'š'));
-/*
-  int size = 4;
-  uint8_t tableau[4] = {'w', 'o', 'r', ((wchar_t)L'š')};
-  uint32_t* msgDecode = Decodage(tableau, size);
-*/
+  printf("\n");
+  struct fileContent fichierAvecErreurs = readFile("alice_0x131_0.01");
+  uint32_t* msgDecodeAvecErreurs = Decodage(fichierAvecErreurs.content, fichierAvecErreurs.size);
+  uint8_t* msgDecodeAvecErreursChar = AffichageDecode(msgDecodeAvecErreurs, fichierAvecErreurs.size);
+  writeFile("TestDecodageSale", msgDecodeAvecErreursChar, fichierAvecErreurs.size);
+  printf("\n");
 
 
-int main(){
+  /*****************************************************/
+  /*Lecture fichier + Encodage + ecriture dans fichier*/
+  /*****************************************************/
 
-  /***********/
-  /*Affichage*/
-  /***********/
+  /*Encodage d'un fichier texte et écriture du message encodé dans un autre fichier*/
 
+  printf("\n");
+  struct fileContent fichierAEncoder = readFile("TestDecodagePropre");
+  uint32_t* msgEncode = Encodage(fichierAEncoder.content, fichierAEncoder.size);
+  uint8_t* msgEncodeChar = AffichageEncode(msgEncode, fichierAEncoder.size);
+  writeFile("TestEncodage", msgEncodeChar, fichierAEncoder.size);
+  printf("\n");
+
+  /*Decodage du fichier encode et ecriture du texte decode dans un fichier*/
+
+  printf("\n");
+  struct fileContent fichierEncode = readFile("TestEncodage");
+  uint32_t* msgEncodeDecode = Decodage(fichierEncode.content, fichierEncode.size);
+  uint8_t* msgEncodeDecodeChar = AffichageDecode(msgEncodeDecode, fichierEncode.size);
+  writeFile("TestDecodageEncode", msgEncodeDecodeChar, fichierEncode.size);
+  printf("\n");
+
+
+  /*******************************************/
+  /*Tests Bruitage + écriture dans un fichier*/
+  /*******************************************/
+
+  /*Bruitage d'un texte encodé + écriture dans un fichier*/
+
+  printf("\n");
+  struct fileContent fichierABruiter = readFile("alice_0x131");
+  uint8_t* msgBruite = bruitage(0.01, fichierABruiter.content, fichierABruiter.size);
+  writeFile("TestBruitage", msgBruite, fichierABruiter.size);
+  printf("\n");
+
+
+  /*Decodage du texte bruité + écriture dans un fichier*/
+
+  printf("\n");
+  struct fileContent fichierBruite = readFile("TestBruitage");
+  uint32_t* msgBruiteDecode = Decodage(fichierBruite.content, fichierBruite.size);
+  uint8_t* msgBruiteDecodeChar = AffichageDecode(msgBruiteDecode, fichierBruite.size);
+  writeFile("TestDecodageBruite", msgBruiteDecodeChar, fichierBruite.size);
   printf("\n");
 
 
 
+
+
+  printf("\n" );
   return 0;
 }
