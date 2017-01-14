@@ -15,7 +15,7 @@ uint8_t* bruitage(float p, uint8_t* blocs, int size)
   int j;
 
   // pour chaque octet (caractere)
-  for(j = 0; j < size; j++)
+  for(j = 0; j < size; j++){
     //pour chaque bit de l'octet
     for(i = 7; i > 0; i--)
     {
@@ -30,5 +30,7 @@ uint8_t* bruitage(float p, uint8_t* blocs, int size)
        }
     }
 
+    printf("%c", (uint8_t)msgBruite[j]);
+  }
   return msgBruite;
 }
