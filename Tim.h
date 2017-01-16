@@ -6,6 +6,7 @@
 #include <fcntl.h>
 #include <math.h>
 #include <time.h>
+#include <stdbool.h>
 
 #define G 0b100110001
 
