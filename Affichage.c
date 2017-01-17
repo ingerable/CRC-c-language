@@ -6,6 +6,10 @@
  */
 void affichagePolynome(uint32_t mot)
 {
+  if(mot == 0){
+    printf("%d", 0);
+  }
+  else{
     uint8_t bit;
     int i;
     for(i = 31 ; i >=0 ; i-- )
@@ -17,14 +21,15 @@ void affichagePolynome(uint32_t mot)
         }
         else if(bit == 0b1)
         {
-            printf("%c",'X' );
-            printf("%d",i );
+          printf("%c",'X' );
+          printf("%d",i );
 
-            if(i > 1 || (i == 1 && ((mot & 1) != 0)))
-            {
-              printf("%c", '+');
-            }
+          if(i > 1 || (i == 1 && ((mot & 1) != 0)))
+          {
+            printf("%c", '+');
+          }
         }
+      }
     }
 }
 

@@ -14,7 +14,7 @@ void writeFile(char* fileName, uint8_t* texteCode, int size)
 
   int i;
   if(file != NULL){
-    for(i = 0; i < size*2 ; i++)
+    for(i = 0; i < (size*4)/3 ; i++)
     {
       fprintf(file, "%c", texteCode[i]);
     }

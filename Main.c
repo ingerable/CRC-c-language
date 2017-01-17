@@ -17,12 +17,11 @@ int main(){
     char source[50];
     char dest[50];
     strcpy(source, "Sources/");
-
     int c;
-    while ((c = getchar()) != '\n' && c != EOF) { }
+    int num = -1;
 
-    int num;
     scanf("%d", &num);
+    while ((c = getchar()) != '\n' && c != EOF) { }
 
     switch (num) {
       case 1:
@@ -58,8 +57,6 @@ int main(){
 
       case 2:
         printf("Entrez le polynome a diviser (dividende) sous forme binaire:\n");
-        while ((c = getchar()) != '\n' && c != EOF) { }
-
         char *bits_str_dividende = malloc(40 * sizeof(char));
         fgets(bits_str_dividende, 40, stdin);
         uint32_t dividende = strtol(bits_str_dividende, NULL, 2);
