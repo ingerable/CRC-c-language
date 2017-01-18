@@ -8,7 +8,13 @@
 #include <time.h>
 #include <stdbool.h>
 
-#define G 0b100110001
+
+#ifndef G
+//#define G 0b100110001
+#define G 0x1C5
+//#define G 0x1D5
+
+#endif
 
 // Division
 int get_nb_bits(uint32_t nombre);
